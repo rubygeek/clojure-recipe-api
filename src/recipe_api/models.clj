@@ -14,13 +14,14 @@
   (Timestamp. (.getTime (Date.))))
 
 (defn add-recipe [data]
-  (let [ {:keys [source url]} data]
+  (let [ {:keys [name source url]} data]
     (insert recipe (values {:name name :source source :url url :created-at (current-time)}))))
 
 (defn all-recipes []
   (select recipe))
 
 
+(add-recipe {:name "Hard Boiled Eggs" :url "www.hardboiledeggs.com" :source "eggs.com"}) 
 
 
 

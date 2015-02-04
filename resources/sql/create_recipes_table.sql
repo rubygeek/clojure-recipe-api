@@ -3,6 +3,8 @@ CREATE ROLE api LOGIN
 
 CREATE SEQUENCE recipes_id_seq;
 
+GRANT USAGE, SELECT ON SEQUENCE recipes_id_seq TO api;
+
 CREATE TABLE recipes
 (
   id integer NOT NULL DEFAULT nextval('recipes_id_seq'::regclass),
