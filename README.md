@@ -1,14 +1,17 @@
 # recipe-api
 
-A Clojure library designed to ... well, that part is up to you.
+A REST webservice to retrieve recipe source, name and url
+
+Clojure
+Postgresql
 
 ## Usage
 
-FIXME
+create a database:
+`createdb recipes`
 
-## License
+load the table schema into database:
+`psql recipes <  create_recipes_table.sql`
 
-Copyright © 2015 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+run in development:
+`lein ring server`
