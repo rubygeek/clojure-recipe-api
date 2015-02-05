@@ -21,7 +21,6 @@
   (select recipe))
 
 
-(add-recipe {:name "Hard Boiled Eggs" :url "www.hardboiledeggs.com" :source "eggs.com"}) 
 
 
 
