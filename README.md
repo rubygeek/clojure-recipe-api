@@ -20,7 +20,7 @@ Load sample data:
 ```
 
 
-```sql
+```
 id |       name       |          url           |    source     |         created-at
 ----+------------------+------------------------+---------------+----------------------------
 53 | Hard Boiled Eggs | www.hardboiledeggs.com | Mom           | 2015-02-07 08:35:43.349-06
@@ -34,6 +34,12 @@ Add your own recipes at the repl:
 ```clj
 (add-recipe {:name "Rice & Chicken" :url "http://www.myrecipes.com/recipe/chicken-and-rice" :source "My Recipes"})
 ```
+
+Add your recipe as TEST data
+```clj
+(add-recipe (testify-data {:name "Rice & Chicken" :url "http://www.myrecipes.com/recipe/chicken-and-rice" :source "My Recipes"}))
+```
+
 Delete all recipes with names starting with TEST
 ```clj
 (delete-test-data)
