@@ -17,6 +17,10 @@
   (let [ {:keys [name source url]} data]
     (insert recipe (values {:name name :source source :url url :created-at (current-time)}))))
 
+(defn add-recipes [datas]
+  (map add-recipe datas))
+
+
 (defn all-recipes []
   (select recipe))
 

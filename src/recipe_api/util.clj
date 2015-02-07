@@ -6,7 +6,6 @@
 (def dbcon (postgres {:db "recipe-api" :user "api" :password "api"}))
 
 (defn delete-test-data []
-  (delete recipe
-          (where {:name [like "TEST%"]})))
+  (delete recipe (where {:name [like "TEST%"]})))
 
 
