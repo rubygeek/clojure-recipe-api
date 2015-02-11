@@ -12,7 +12,7 @@ create a database and user in postgresql:
 
 
 run the user creation and table schema:
-`psql recipes <  create_recipes_table.sql`
+`psql api  <  create_recipes_table.sql`
 
 Load sample data:
 ```clj
