@@ -15,7 +15,7 @@
  (update-in data [:name] #(str "TEST " %)))
 
 (defn testify-all-data [datas]
-  (map #(testify-data %) datas))
+  (map testify-data datas))
 
 (defn load-test-data []
   (add-recipes (testify-all-data sample-data)))
