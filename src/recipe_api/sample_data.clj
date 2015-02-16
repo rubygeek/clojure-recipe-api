@@ -8,8 +8,11 @@
     {:name "Pizza"            :url "www.pizza.com"          :source "Good Recipes"}])
 
 
-(defn testify-data [data]
+(defn testify-data2 [data]
    (merge data (hash-map  :name (str "TEST " (:name data) ))))
+
+(defn testify-data [data]
+ (update-in data [:name] #(str "TEST " %)))
 
 (defn testify-all-data [datas]
   (map #(testify-data %) datas))
