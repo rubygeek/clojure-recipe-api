@@ -3,7 +3,7 @@
            [java.sql Timestamp])
   (:use korma.core korma.db))
 
-(defdb db (postgres {:db "recipes" :user "api" :password "api"}))
+(defdb db (postgres {:host "http://www.learnallthings.com" :db "recipes" :user "api" :password "api"}))
 
 (defentity recipe
   (pk :id)
@@ -12,6 +12,7 @@
 
 (defn current-time []
   (Timestamp. (.getTime (Date.))))
+(current-time)
 
 (defn add-recipe [data]
   (let [ {:keys [name source url]} data]

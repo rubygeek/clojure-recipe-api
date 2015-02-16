@@ -3,7 +3,6 @@
    [clojure.data.json :as json]
    [recipe-api.util :as util]
    [liberator.core :refer [resource defresource]]
-    [ring.middleware.params :refer [wrap-params]]
     [recipe-api.models :refer [add-recipe all-recipes]]
     [compojure.core :refer [defroutes GET ANY]]))
 
@@ -19,8 +18,7 @@
   (ANY "/recipes" [] all-recipes-resource))
 
 (def handler
-  (-> app
-      wrap-params))
+  (-> app ))
 
 
 
