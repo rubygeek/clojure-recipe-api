@@ -8,15 +8,18 @@ Postgresql
 ## Usage
 
 create a database and user in postgresql:
-`createdb recipes`
-
+```clj
+createdb recipes
+```
 
 run the user creation and table schema:
-`psql api  <  create_recipes_table.sql`
-
-Load sample data:
 ```clj
-(load-test-data)
+psql recipes <  resources/sql/create_recipes_table.sql
+```
+
+Load sample data (update your host and credentials in models.clj)
+```clj
+(recipe-api.sample-data/load-test-data)
 ```
 
 
