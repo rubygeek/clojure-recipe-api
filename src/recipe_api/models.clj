@@ -30,4 +30,6 @@
 
 (defn delete-recipe [id]
   (delete recipe (where {:id id})))
-  
+
+(defn update-recipe [rec]
+  (update recipe (korma.core/set-fields rec) (where {:id (:id rec)})))
