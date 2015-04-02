@@ -3,7 +3,8 @@
            [java.sql Timestamp])
   (:use korma.core korma.db))
 
-(defdb db (postgres {:host "http://www.learnallthings.com" :db "recipes" :user "api" :password "api"}))
+;;(defdb db (postgres {:host "http://www.learnallthings.com" :db "recipes" :user "api" :password "api"}))
+(defdb db (postgres {:host "localhost" :db "recipes" :user "bridgethillyer" :password ""}))
 
 (defentity recipe
   (pk :id)
@@ -21,13 +22,14 @@
 (defn add-recipes [datas]
   (map add-recipe datas))
 
-
 (defn all-recipes []
   (select recipe))
 
+(defn recipe-entity [id]
+  (first (select recipe (where {:id id}))))
 
+(defn delete-recipe [id]
+  (delete recipe (where {:id id})))
 
-
-
-
-  
+(defn update-recipe [rec]
+  (update recipe (korma.core/set-fields rec) (where {:id (:id rec)})))
