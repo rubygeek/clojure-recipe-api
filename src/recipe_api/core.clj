@@ -8,6 +8,15 @@
                               recipe-entity delete-recipe update-recipe]]
     [compojure.core :refer [defroutes GET ANY]]))
 
+(defn recipe-request-malformed?
+  [{{method :request-method} :request :as ctx}]
+  (if (= :post method)
+    (let [recipe-data (util/parse-json-body ctx)]
+      (if (empty? (:name recipe-data))
+        [true {:message "Recipe name missing or empty"}]
+        [false {:recipe-data recipe-data}]))
+     false))
+
 (defn recipe-update-malformed?
   [{{method :request-method} :request :as ctx}]
   (if (= :put method)
@@ -20,6 +29,7 @@
 
 (defresource all-recipes-resource
   :available-media-types ["application/json"]
+  :malformed? recipe-request-malformed?
   :allowed-methods [:get :post]
   :post! 
   (fn [{recipe :recipe-data}] (add-recipe recipe))
