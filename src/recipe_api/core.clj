@@ -4,15 +4,20 @@
    [recipe-api.util :as util]
    [liberator.core :refer [resource defresource]]
    [liberator.dev :refer [wrap-trace]]
+   [liberator.representation :refer [as-response]]
    [recipe-api.models :refer [add-recipe all-recipes
                               recipe-entity delete-recipe update-recipe]]
-    [compojure.core :refer [defroutes GET ANY]]))
+   [compojure.core :refer [defroutes GET ANY]]))
+
+(def my-context (atom nil))
 
 (defn recipe-request-malformed?
   [{{method :request-method} :request :as ctx}]
+  (reset! my-context ctx)
   (if (= :post method)
     (let [recipe-data (util/parse-json-body ctx)]
       (if (empty? (:name recipe-data))
+       
         [true {:message "Recipe name missing or empty"}]
         [false {:recipe-data recipe-data}]))
      false))
@@ -27,8 +32,11 @@
        :else [false {:recipe-data recipe-data}])))
   false)
 
-(defresource all-recipes-resource
-  :available-media-types ["application/json"]
+(defresource all-recipes-resource [_]
+   :as-response (fn [d ctx]
+                 (-> (as-response d ctx) ;; default implementation
+                     (assoc-in [:headers "Access-Control-Allow-Origin"] "*")))
+  :media-type-available? (fn [_] "application/json")
   :malformed? recipe-request-malformed?
   :allowed-methods [:get :post]
   :post! 
@@ -59,6 +67,8 @@
 (def handler
   (-> app
       (wrap-trace :header :ui)))
+
+
 
 
 
