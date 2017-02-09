@@ -3,8 +3,7 @@
            [java.sql Timestamp])
   (:use korma.core korma.db))
 
-;;(defdb db (postgres {:host "http://www.learnallthings.com" :db "recipes" :user "api" :password "api"}))
-(defdb db (postgres {:host "localhost" :db "recipes" :user "eniac" :password ""}))
+(defdb db (postgres {:host "localhost" :db "recipes" :user "nola" :password ""}))
 
 (defentity recipe
   (pk :id)
