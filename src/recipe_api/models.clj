@@ -1,34 +1,54 @@
 (ns recipe-api.models
   (:import [java.util Date]
            [java.sql Timestamp])
-  (:use korma.core korma.db))
+  (:require [environ.core :refer [env]]
+            [clojure.java.jdbc :as sql]))
 
-(defdb db (postgres {:host "localhost" :db "recipes" :user "nola" :password ""}))
 
-(defentity recipe
-  (pk :id)
-  (table :recipes)
-  (entity-fields :id :name :url :source))
 
-(defn current-time []
+(def db "postgresql://localhost:5432/recipes")
+
+(def dbspec { :dbtype "postgresql"
+              :dbname "recipes"
+              :host "127.0.0.1"
+              :user  "api"
+              :password "api"})
+
+(defn ^:private status
+   "Return nice result"
+   [result]
+   (if (= 1 (first result))
+    :success
+    :failure))
+  
+(def ^:private current-time
+  "Get the current Time"
   (Timestamp. (.getTime (Date.))))
-(current-time)
+
 
 (defn add-recipe [data]
   (let [ {:keys [name source url]} data]
-    (insert recipe (values {:name name :source source :url url :created-at (current-time)}))))
+    (sql/insert! dbspec :recipes { :name   name
+                                   :source source
+                                   :url    url 
+                                   :created-at (java.util.Date.)} )))
 
 (defn add-recipes [datas]
   (map add-recipe datas))
 
 (defn all-recipes []
-  (select recipe))
+  (sql/query db
+             ["select * from recipes"]))
 
+;; get one recipe
 (defn recipe-entity [id]
-  (first (select recipe (where {:id id}))))
+  (first (sql/query dbspec ["select * from recipes where id = ?" id])))
+
+;; alias recipe-entity method for now 
+(def get-recipe-by-id recipe-entity)
 
 (defn delete-recipe [id]
-  (delete recipe (where {:id id})))
+  (status (sql/delete! dbspec :recipes ["id = ?" id])))
 
-(defn update-recipe [rec]
-  (update recipe (korma.core/set-fields rec) (where {:id (:id rec)})))
+(defn update-recipe [id rec]
+  (status (sql/update! dbspec :recipes (select-keys rec [:name :source :url]) ["id = ?" id] )))

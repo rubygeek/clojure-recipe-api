@@ -7,10 +7,7 @@ Postgresql
 
 ## Usage
 
-create a database and user in postgresql on command line:
-```clj
-createdb recipes
-```
+create a database `recipes` and user `api` in postgresql.
 
 run the user creation and table schema:
 ```clj
@@ -19,7 +16,7 @@ psql recipes <  resources/sql/create_recipes_table.sql
 
 Load sample data in repl (update your host and credentials in models.clj)
 ```clj
-(require '[recipie-api.sample-data])
+(require '[recipe-api.sample-data])
 (recipe-api.sample-data/load-test-data)
 ```
 

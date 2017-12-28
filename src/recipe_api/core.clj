@@ -6,7 +6,7 @@
    [liberator.dev :refer [wrap-trace]]
    [liberator.representation :refer [as-response]]
    [recipe-api.models :refer [add-recipe all-recipes
-                              recipe-entity delete-recipe update-recipe]]
+                              delete-recipe recipe-entity update-recipe]]
    [compojure.core :refer [defroutes GET ANY]]))
 
 (def my-context (atom nil))
@@ -48,7 +48,7 @@
   :allowed-methods [:get :put :delete]
   :exists?
   (fn [_]
-    (if-let [rec (recipe-entity id)]
+    (if-let [rec recipe-entity] ;; id
       [true {:recipe rec}]
       [false {:message "Recipe not found"}]))
   :malformed? recipe-update-malformed?
