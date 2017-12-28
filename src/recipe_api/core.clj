@@ -1,13 +1,13 @@
 (ns recipe-api.core
   (:require
-   [clojure.data.json :as json]
-   [recipe-api.util :as util]
-   [liberator.core :refer [resource defresource]]
-   [liberator.dev :refer [wrap-trace]]
-   [liberator.representation :refer [as-response]]
-   [recipe-api.models :refer [add-recipe all-recipes
-                              delete-recipe recipe-entity update-recipe]]
-   [compojure.core :refer [defroutes GET ANY]]))
+    [clojure.data.json :as json]
+    [recipe-api.util :as util]
+    [liberator.core :refer [resource defresource]]
+    [liberator.dev :refer [wrap-trace]]
+    [liberator.representation :refer [as-response]]
+    [recipe-api.models :refer [add-recipe all-recipes
+                               delete-recipe recipe-entity update-recipe]]
+    [compojure.core :refer [defroutes GET ANY]]))
 
 (def my-context (atom nil))
 
@@ -38,7 +38,7 @@
                      (assoc-in [:headers "Access-Control-Allow-Origin"] "*")))
   :media-type-available? (fn [_] "application/json")
   :malformed? recipe-request-malformed?
-  :allowed-methods [:get :post]
+  :aLlowed-methods [:get :post]
   :post! 
   (fn [{recipe :recipe-data}] (add-recipe recipe))
   :handle-ok (fn [_] (json/write-str (all-recipes))))

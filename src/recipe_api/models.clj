@@ -1,8 +1,7 @@
 (ns recipe-api.models
-  (:import [java.util Date]
-           [java.sql Timestamp])
-  (:require [environ.core :refer [env]]
-            [clojure.java.jdbc :as sql]))
+  (:require [environ.core      :refer [env]]
+            [clojure.java.jdbc :as sql]
+            [clj-time.core     :as t] ))
 
 
 
@@ -21,7 +20,7 @@
     :success
     :failure))
   
-(def ^:private current-time
+#_(def ^:private current-time
   "Get the current Time"
   (Timestamp. (.getTime (Date.))))
 
@@ -31,7 +30,7 @@
     (sql/insert! dbspec :recipes { :name   name
                                    :source source
                                    :url    url 
-                                   :created-at (java.util.Date.)} )))
+                                   :created-at (t/now)} )))
 
 (defn add-recipes [datas]
   (map add-recipe datas))
