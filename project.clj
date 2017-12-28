@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [liberator "0.14.1"]
                  [compojure "1.5.2"]
-                 [clojure.jdbc "0.4.0"]
+                 [org.clojure/java.jdbc  "0.7.4"]
                  [org.postgresql/postgresql "42.1.4"]
                  [org.clojure/data.json "0.2.6"]
                  [environ "1.1.0"]

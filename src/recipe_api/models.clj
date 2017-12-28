@@ -1,14 +1,11 @@
 (ns recipe-api.models
   (:require [environ.core      :refer [env]]
             [clojure.java.jdbc :as sql]
-            [clj-time.core     :as t] ))
-
-
-
-(def db "postgresql://localhost:5432/recipes")
+            [clj-time.core :as t]
+            [clj-time.jdbc]))
 
 (def dbspec { :dbtype "postgresql"
-              :dbname "recipes"
+              :dbname "recipes2"
               :host "127.0.0.1"
               :user  "api"
               :password "api"})
@@ -20,23 +17,17 @@
     :success
     :failure))
   
-#_(def ^:private current-time
-  "Get the current Time"
-  (Timestamp. (.getTime (Date.))))
-
-
 (defn add-recipe [data]
   (let [ {:keys [name source url]} data]
     (sql/insert! dbspec :recipes { :name   name
                                    :source source
-                                   :url    url 
-                                   :created-at (t/now)} )))
+                                   :url    url} )))
 
 (defn add-recipes [datas]
   (map add-recipe datas))
 
 (defn all-recipes []
-  (sql/query db
+  (sql/query dbspec
              ["select * from recipes"]))
 
 ;; get one recipe
