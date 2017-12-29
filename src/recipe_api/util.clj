@@ -1,13 +1,8 @@
 (ns recipe-api.util
-  (:require [korma.db :refer [postgres]]
-            [recipe-api.models :refer [recipe]]
-            [clojure.data.json :as json]
-            [clojure.java.io :as io])
-  (:use korma.core))
+  (:require [clojure.data.json :as json]
+            [clojure.java.io :as io]))
 
-(def dbcon (postgres {:db "recipe-api" :user "api" :password "api"}))
-
-(defn delete-test-data []
+#_(defn delete-test-data []
   (delete recipe (where {:name [like "TEST%"]})))
 
 

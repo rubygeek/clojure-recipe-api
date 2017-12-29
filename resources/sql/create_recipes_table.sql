@@ -10,8 +10,7 @@ CREATE TABLE recipes
   id integer NOT NULL DEFAULT nextval('recipes_id_seq'::regclass),
   name text,
   url text,
-  source text,
-  "created-at" timestamp with time zone
+  source text
 );
 
 ALTER TABLE recipes
