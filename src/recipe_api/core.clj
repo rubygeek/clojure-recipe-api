@@ -9,11 +9,8 @@
                                delete-recipe recipe-entity update-recipe]]
     [compojure.core :refer [defroutes GET ANY]]))
 
-(def my-context (atom nil))
-
 (defn recipe-request-malformed?
   [{{method :request-method} :request :as ctx}]
-  (reset! my-context ctx)
   (if (= :post method)
     (let [recipe-data (util/parse-json-body ctx)]
       (if (empty? (:name recipe-data))
@@ -26,11 +23,10 @@
   [{{method :request-method} :request :as ctx}]
   (if (= :put method)
     (let [recipe-data (util/parse-json-body ctx)]
-      (cond
-       (empty? recipe-data)
-       [true {:message "No new values provided."}]
-       :else [false {:recipe-data recipe-data}])))
-  false)
+      (cond (empty? recipe-data)
+        [true {:message "No new values provided."}]
+        :else [false {:recipe-data recipe-data}])))
+      false)
 
 (defresource all-recipes-resource [_]
    :as-response (fn [d ctx]
@@ -38,9 +34,9 @@
                      (assoc-in [:headers "Access-Control-Allow-Origin"] "*")))
   :media-type-available? (fn [_] "application/json")
   :malformed? recipe-request-malformed?
-  :aLlowed-methods [:get :post]
+  :allowed-methods [:get :post]
   :post! 
-  (fn [{recipe :recipe-data}] (add-recipe recipe))
+    (fn [{recipe :recipe-data}] (add-recipe recipe))
   :handle-ok (fn [_] (json/write-str (all-recipes))))
 
 (defresource recipe-resource [id]
@@ -48,17 +44,18 @@
   :allowed-methods [:get :put :delete]
   :exists?
   (fn [_]
-    (if-let [rec recipe-entity] ;; id
+    (if-let [rec (recipe-entity id)]
       [true {:recipe rec}]
       [false {:message "Recipe not found"}]))
   :malformed? recipe-update-malformed?
   :conflict? false
   :delete!
-  (fn [{{recipe-id :id} :recipe}] (delete-recipe recipe-id))
+    (fn [{{recipe-id :id} :recipe}] (delete-recipe recipe-id))
   :can-put-to-missing? false
   :put!
-  (fn [{recipe :recipe-data}] (update-recipe (assoc recipe :id id)))
-  :handle-ok (fn [{recipe :recipe}] (json/write-str recipe)))
+    (fn [{recipe :recipe-data}] (update-recipe (assoc recipe :id id)))
+  :handle-ok (fn [{recipe :recipe}]
+     (json/write-str recipe)))
 
 (defroutes app
   (ANY "/recipes" [] all-recipes-resource)
@@ -66,7 +63,7 @@
 
 (def handler
   (-> app
-      (wrap-trace :header :ui)))
+    (wrap-trace :header :ui)))
 
 
 

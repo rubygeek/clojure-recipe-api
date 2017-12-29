@@ -36,7 +36,7 @@
 
 ;; get one recipe
 (defn recipe-entity [id]
-  (first (sql/query dbspec ["select * from recipes where id = ?" id])))
+  (sql/query dbspec ["select * from recipes where id = ?" id]))
 
 ;; alias recipe-entity method for now 
 (def get-recipe-by-id recipe-entity)

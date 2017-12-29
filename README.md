@@ -22,12 +22,12 @@ Load sample data in repl (update your host and credentials in models.clj)
 
 
 ```
-id |       name       |          url           |    source     |         created-at
-----+------------------+------------------------+---------------+----------------------------
-53 | Hard Boiled Eggs | www.hardboiledeggs.com | Mom           | 2015-02-07 08:35:43.349-06
-54 | Grilled Cheese   | www.grilledcheese.com  | Ultra Foods   | 2015-02-07 08:35:43.377-06
-55 | Sliced Bread     | www.slicedbread.com    | Bread for you | 2015-02-07 08:35:43.38-06
-56 | Pizza            | www.pizza.com          | Good Recipes  | 2015-02-07 08:35:43.42-06
+id |       name       |          url           |    source     |
+----+------------------+------------------------+---------------
+53 | Hard Boiled Eggs | www.hardboiledeggs.com | Mom           |
+54 | Grilled Cheese   | www.grilledcheese.com  | Ultra Foods   |
+55 | Sliced Bread     | www.slicedbread.com    | Bread for you |
+56 | Pizza            | www.pizza.com          | Good Recipes  |
 (4 rows)
 ```
 
