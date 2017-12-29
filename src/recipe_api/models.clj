@@ -19,9 +19,9 @@
   
 (defn add-recipe [data]
   (let [ {:keys [name source url]} data]
-    (sql/insert! dbspec :recipes { :name   name
-                                   :source source
-                                   :url    url} )))
+    (first (sql/insert! dbspec :recipes { :name   name
+                                         :source source
+                                         :url    url} ))))
 
 (defn add-recipes [datas]
   (map add-recipe datas))
@@ -29,6 +29,10 @@
 (defn all-recipes []
   (sql/query dbspec
              ["select * from recipes"]))
+
+(defn count-recipes []
+  (:count (first (sql/query dbspec 
+                            ["select count(*) from recipes"]))))
 
 ;; get one recipe
 (defn recipe-entity [id]
@@ -42,3 +46,4 @@
 
 (defn update-recipe [id rec]
   (status (sql/update! dbspec :recipes (select-keys rec [:name :source :url]) ["id = ?" id] )))
+
