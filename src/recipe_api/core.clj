@@ -59,7 +59,7 @@
 
 (defroutes app
   (ANY "/recipes" [] all-recipes-resource)
-  (ANY "/recipe/:id" [id]  (recipe-resource (Integer/parseInt id))))
+  (ANY "/recipe/:id" [id]  (recipe-resource (read-string id))))
 
 (def handler
   (-> app
