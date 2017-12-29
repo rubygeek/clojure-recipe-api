@@ -53,7 +53,7 @@
     (fn [{{recipe-id :id} :recipe}] (delete-recipe recipe-id))
   :can-put-to-missing? false
   :put!
-    (fn [{recipe :recipe-data}] (update-recipe (assoc recipe :id id)))
+    (fn [{recipe :recipe-data}] (update-recipe id recipe))
   :handle-ok (fn [{recipe :recipe}]
      (json/write-str recipe)))
 
