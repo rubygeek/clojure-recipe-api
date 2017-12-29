@@ -1,24 +1,23 @@
 (ns recipe-api.models-test
   (:require [clojure.test :refer :all]
-            [environ.core :refer [env]]
             [recipe-api.models :as m]
             [clojure.java.jdbc :as sql]))
 
-(def test-dbspec { :dbtype   "postgresql"
-                   :dbname   (:database-name env)
-                   :host     "127.0.0.1"
-                   :user     (:database-user env)
-                   :password (:database-pass env) })
+(defn empty-db
+  "Empty all records from db"
+  []
+  (sql/delete! m/dbspec 
+               :recipes ["id >= ?" 1]))
 
-(defn empty-db []
-  (sql/query test-dbspec 
-             "truncate recipes"))
+(use-fixtures :each (fn [tests]
+                      (empty-db)
+                      (tests)))
 
-
-(with-redefs [m/dbspec test-dbspec]
+(deftest recipe-added-increased-count
   (let [data {:name "cookies"} 
         added (m/add-recipe data)
         total (m/count-recipes)]
+    
     (is (= (:name data) (:name added)))
     (is (= 1 total))))
    
