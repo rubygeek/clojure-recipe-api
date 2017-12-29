@@ -1,0 +1,2 @@
+{:dev  {:env {:database-name "recipes2"     :database-user "api" :database-pass "api"}}
+ :test {:env {:database-name "recipes-test" :database-user "api" :database-pass "api"}}}
