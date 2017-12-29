@@ -12,6 +12,6 @@
                  [environ "1.1.0"]
                  [clj-time "0.14.2"]
                  [ring "1.5.1"]]
-  :plugins [[lein-ring "0.8.11"]]
+  :plugins [[lein-ring "0.12.2"]]
   :ring {:handler recipe-api.core/handler
          :nrepl { :start? true :port 5000}})
