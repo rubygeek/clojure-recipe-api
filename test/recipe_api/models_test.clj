@@ -1,13 +1,14 @@
 (ns recipe-api.models-test
   (:require [clojure.test :refer :all]
+            [environ.core :refer [env]]
             [recipe-api.models :as m]
             [clojure.java.jdbc :as sql]))
 
-(def test-dbspec { :dbtype "postgresql"
-                   :dbname "recipes-test"
-                   :host "127.0.0.1"
-                   :user  "api"
-                   :password "api" })
+(def test-dbspec { :dbtype   "postgresql"
+                   :dbname   (:database-name env)
+                   :host     "127.0.0.1"
+                   :user     (:database-user env)
+                   :password (:database-pass env) })
 
 (defn empty-db []
   (sql/query test-dbspec 

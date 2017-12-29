@@ -4,11 +4,11 @@
             [clj-time.core :as t]
             [clj-time.jdbc]))
 
-(def dbspec { :dbtype "postgresql"
-              :dbname "recipes2"
-              :host "127.0.0.1"
-              :user  "api"
-              :password "api"})
+(def dbspec { :dbtype   "postgresql"
+              :dbname   (:database-name env) 
+              :host     "127.0.0.1"
+              :user     (:database-user env)
+              :password (:database-pass env)})
 
 (defn ^:private status
    "Return nice result"
