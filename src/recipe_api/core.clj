@@ -6,7 +6,7 @@
     [liberator.dev :refer [wrap-trace]]
     [liberator.representation :refer [as-response]]
     [recipe-api.models :refer [add-recipe all-recipes
-                               delete-recipe recipe-entity update-recipe]]
+                               delete-recipe get-recipe-by-id update-recipe]]
     [compojure.core :refer [defroutes GET ANY]]))
 
 (defn recipe-request-malformed?
@@ -44,7 +44,7 @@
   :allowed-methods [:get :put :delete]
   :exists?
   (fn [_]
-    (if-let [rec (recipe-entity id)]
+    (if-let [rec (get-recipe-by-id id)]
       [true {:recipe rec}]
       [false {:message "Recipe not found"}]))
   :malformed? recipe-update-malformed?

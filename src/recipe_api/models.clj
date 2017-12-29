@@ -35,11 +35,8 @@
                             ["select count(*) from recipes"]))))
 
 ;; get one recipe
-(defn recipe-entity [id]
+(defn get-recipe-by-id [id]
   (sql/query dbspec ["select * from recipes where id = ?" id]))
-
-;; alias recipe-entity method for now 
-(def get-recipe-by-id recipe-entity)
 
 (defn delete-recipe [id]
   (status (sql/delete! dbspec :recipes ["id = ?" id])))
