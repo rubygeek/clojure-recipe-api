@@ -14,7 +14,8 @@
                  [compojure "1.6.0"]
                  [ring "1.6.3"]]
 
-  :plugins [[lein-ring "0.12.2"]]
+  :plugins [[lein-ring "0.12.2"]
+            [lein-environ "1.1.0"]]
 
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [com.stuartsierra/component.repl "0.2.0"]]
